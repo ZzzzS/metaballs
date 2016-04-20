@@ -10,10 +10,10 @@ void setup(){
     circles[i] = new Circle();
   }
   
-   m = new Metaball(3,circles,1.2);
-   m1 = new Metaball(3,circles);
-   m2 = new Metaball(3,circles,0.8);
-   m3 = new Metaball(3,circles,0.6);
+   m = new Metaball(5,circles,1.2);
+   m1 = new Metaball(5,circles);
+   m2 = new Metaball(5,circles,0.8);
+   m3 = new Metaball(5,circles,0.6);
   noLoop();
 }
 void draw(){
@@ -21,6 +21,4 @@ void draw(){
   m1.draw();
   m2.draw();
   m3.draw();
-  //println(m._cellTypes);
-  //println(m._thresholdSamples);
 }

@@ -1,9 +1,9 @@
 class Metaball{
   int _cellSize;
   float _threshold;
-  ArrayList<ArrayList<Float>> _samples;
-  ArrayList<ArrayList<Boolean>> _thresholdSamples;
-  ArrayList<ArrayList<Integer>> _cellTypes;
+  float[][] _samples;
+  boolean[][] _thresholdSamples;
+  int[][] _cellTypes;
   Circle[] _circles;
   Metaball(int cellSize, int numCircles){
     this._cellSize = cellSize;
@@ -57,9 +57,9 @@ class Metaball{
   
   void drawThresholdedCorners(){
     fill(color(136,136,136));
-    for(int i=0;i < this._thresholdSamples.size();i++){
-      for(int j=0; j < this._thresholdSamples.get(i).size();j++){
-        boolean thresholdSamples = this._thresholdSamples.get(i).get(j);
+    for(int i=0;i < this._thresholdSamples.length;i++){
+      for(int j=0; j < this._thresholdSamples[i].length;j++){
+        boolean thresholdSamples = this._thresholdSamples[i][j];
         
         int x = j * this._cellSize;
         int y = i * this._cellSize;
@@ -77,9 +77,9 @@ class Metaball{
   
   void draw45DegContours(){
     stroke(color(0,255,0));
-    for(int i = 0; i < this._cellTypes.size(); i++){
-      for(int j = 0; j < this._cellTypes.get(i).size(); j++){
-        int cellType = this._cellTypes.get(i).get(j);
+    for(int i = 0; i < this._cellTypes.length; i++){
+      for(int j = 0; j < this._cellTypes[i].length; j++){
+        int cellType = this._cellTypes[i][j];
         char[] polyCompassCorners = cellTypeToPolyCorners[cellType];
         
         float[] a1 = {i,j+0.5};
@@ -124,15 +124,15 @@ class Metaball{
   
    void drawSmoothContours(){
     stroke(color(0,255,0));
-    for(int i = 0; i < this._cellTypes.size(); i++){
-      for(int j = 0; j < this._cellTypes.get(i).size(); j++){
-        int cellType = this._cellTypes.get(i).get(j);
+    for(int i = 0; i < this._cellTypes.length; i++){
+      for(int j = 0; j < this._cellTypes[i].length; j++){
+        int cellType = this._cellTypes[i][j];
         char[] polyCompassCorners = cellTypeToPolyCorners[cellType];
         
-        float NW = this._samples.get(i).get(j);
-        float NE = this._samples.get(i).get(j + 1);
-        float SW = this._samples.get(i + 1).get(j);
-        float SE = this._samples.get(i + 1).get(j + 1);
+        float NW = this._samples[i][j];
+        float NE = this._samples[i][j + 1];
+        float SW = this._samples[i + 1][j];
+        float SE = this._samples[i + 1][j + 1];
         
         float N = (cellType & 4) == (cellType & 8) ? 0.5 : lerp(NW, NE, 0, 1, this._threshold); 
         float E = (cellType & 2) == (cellType & 4) ? 0.5 : lerp(NE, SE, 0, 1, this._threshold); 
